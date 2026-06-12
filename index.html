@@ -58,10 +58,12 @@
           <option value="json">SyncLyrics JSON</option>
         </select>
       </label>
+
       <label class="field">
         <span>Offset milliseconds</span>
         <input id="offset-input" type="number" value="0" step="20">
       </label>
+
       <label class="field">
         <span>Manual export target</span>
         <select id="export-format-select">
@@ -74,19 +76,23 @@
           <option value="lrc_word">Apple LRC</option>
         </select>
       </label>
+
       <button class="primary-action" id="download-export-button" type="button" disabled>Download converted file</button>
+
       <label class="field">
         <span>Cursor granularity</span>
         <select id="granularity-select">
-          <option value="phrase">Phrase</option>
+          <option value="cue">Phrase</option>
           <option value="word" selected>Word</option>
           <option value="grapheme">Grapheme</option>
         </select>
       </label>
+
       <label class="field field-inline">
         <input id="inverse-highlight-toggle" type="checkbox" checked>
         <span>Inverse highlight</span>
       </label>
+
       <p class="status-line" id="status-line">WASM backend is loading.</p>
     </section>
 

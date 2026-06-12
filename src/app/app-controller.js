@@ -18,6 +18,7 @@ export class AppController {
     this.status = new StatusView(this.elements.status);
     this.panels = new PanelsView(this.elements.outputs, this.elements.buttons);
     this.audioLoader = new AudioLoader(this.elements.audio);
+    this.offsetRebuildTimer = 0;
     this.player = new LyricsPlayer({
       audio: this.elements.audio,
       stage: this.elements.karaokeStage,
@@ -89,19 +90,40 @@ export class AppController {
     this.elements.loadAudioButton.addEventListener('click', () => this.elements.audioInput.click());
     this.elements.loadLyricsButton.addEventListener('click', () => this.elements.lyricsInput.click());
     this.elements.togglePlayerButton.addEventListener('click', () => setHidden(this.elements.karaokeDock, !this.elements.karaokeDock.hidden));
-    this.elements.toggleSettingsButton.addEventListener('click', () => setHidden(this.elements.settingsSheet, !this.elements.settingsSheet.hidden));
+    this.elements.toggleSettingsButton.addEventListener('click', event => {
+      event.stopPropagation();
+      setHidden(this.elements.settingsSheet, !this.elements.settingsSheet.hidden);
+    });
     this.elements.downloadExportButton.addEventListener('click', () => this.conversion.downloadManualExport());
 
     this.elements.audioInput.addEventListener('change', event => this.handleAudioFile(event.target.files?.[0]));
     this.elements.lyricsInput.addEventListener('change', event => this.handleLyricsFile(event.target.files?.[0]));
 
-    for (const control of Object.values(this.elements.controls)) {
-      if (control) control.addEventListener('change', () => this.conversion.rebuild());
-    }
+    this.elements.controls.inputFormat.addEventListener('change', () => this.conversion.rebuild());
+    this.elements.controls.exportFormat.addEventListener('change', () => this.conversion.rebuild());
+    this.elements.controls.granularity.addEventListener('change', () => this.conversion.rebuild());
+    this.elements.controls.offset.addEventListener('input', () => this.scheduleRealtimeRebuild());
+    this.elements.controls.offset.addEventListener('change', () => this.conversion.rebuild());
 
     this.elements.controls.inverseHighlight.addEventListener('change', () => {
       this.elements.karaokeStage.dataset.inverse = String(this.elements.controls.inverseHighlight.checked);
+      this.conversion.rebuild();
     });
+
+    this.elements.settingsSheet.addEventListener('click', event => event.stopPropagation());
+    document.addEventListener('click', () => setHidden(this.elements.settingsSheet, true));
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        setHidden(this.elements.settingsSheet, true);
+      }
+    });
+  }
+
+  scheduleRealtimeRebuild() {
+    window.clearTimeout(this.offsetRebuildTimer);
+    this.offsetRebuildTimer = window.setTimeout(() => {
+      this.conversion.rebuild();
+    }, 120);
   }
 
   handleDroppedFiles(files) {

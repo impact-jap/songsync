@@ -29,6 +29,8 @@
   bottom: 84px;
   z-index: 50;
   width: min(380px, calc(100vw - 24px));
+  max-height: min(72vh, 560px);
+  overflow: auto;
   padding: 1rem;
   color: var(--dock-fg);
   background: var(--dock-bg);

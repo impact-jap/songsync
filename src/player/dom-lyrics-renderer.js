@@ -49,7 +49,7 @@ export class DomLyricsRenderer {
 
     for (const [nodeId, element] of this.nodeElements) {
       const startMs = Number(element.dataset.startMs || 0);
-      const isActive = activeNodeId === nodeId;
+      const isActive = activeNodeId === nodeId || element.dataset.cueId === activeNodeId;
       element.classList.toggle('is-active', isActive);
       element.classList.toggle('is-past', !isActive && startMs > 0 && startMs < timeMs);
     }
@@ -93,6 +93,7 @@ export class DomLyricsRenderer {
       token.className = 'karaoke-token';
       token.textContent = text;
       token.dataset.nodeId = String(node.id);
+      token.dataset.cueId = group.cueId;
       token.dataset.startMs = String(node.start_ms ?? group.startMs ?? 0);
       token.addEventListener('click', () => this.onNodeClick(String(node.id)));
       lineElement.appendChild(token);
@@ -136,8 +137,8 @@ export class DomLyricsRenderer {
   }
 
   resolveActiveNodeId(cursorState) {
-    if (this.displayType === 'phrase') {
-      return normalizeCueId(cursorState.active_cue_id) || cueIdFromNodeId(cursorState.active_node_id);
+    if (this.displayType === 'cue') {
+      return normalizeCueId(cursorState.active_cue_id || cursorState.active_node_id || cursorState.active_word_id);
     }
 
     if (this.displayType === 'word') {
@@ -156,8 +157,8 @@ function selectDisplayNodes(nodes, preferredType) {
   const words = allNodes.filter(node => classifyNode(node) === 'word');
   if (words.length > 0) return words;
 
-  const phrases = allNodes.filter(node => classifyNode(node) === 'phrase');
-  if (phrases.length > 0) return phrases;
+  const cues = allNodes.filter(node => classifyNode(node) === 'cue');
+  if (cues.length > 0) return cues;
 
   return allNodes.filter(node => classifyNode(node) !== 'unknown');
 }
@@ -190,11 +191,11 @@ function classifyNode(node) {
   if (!id) return 'unknown';
   if (/-g-\d+$/i.test(id)) return 'grapheme';
   if (/-w-\d+$/i.test(id)) return 'word';
-  return 'phrase';
+  return 'cue';
 }
 
 function normalizeDisplayType(value) {
-  if (value === 'phrase') return 'phrase';
+  if (value === 'phrase' || value === 'cue') return 'cue';
   if (value === 'grapheme') return 'grapheme';
   return 'word';
 }

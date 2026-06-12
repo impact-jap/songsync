@@ -31,7 +31,7 @@ export class SyncLyricsService {
       JSON.stringify({
         offset_ms: Number(options.offsetMs || 0),
         cursor: {
-          granularity: options.granularity || 'word',
+          granularity: normalizeGranularity(options.granularity),
           lead_ms: Number(options.leadMs || 0),
           tolerance_ms: Number(options.toleranceMs || 24),
           last_word_hold_ms: Number(options.lastWordHoldMs || 600),
@@ -51,4 +51,10 @@ export class SyncLyricsService {
       }
     };
   }
+}
+
+function normalizeGranularity(value) {
+  if (value === 'phrase' || value === 'cue') return 'cue';
+  if (value === 'grapheme') return 'grapheme';
+  return 'word';
 }
