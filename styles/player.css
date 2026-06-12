@@ -47,7 +47,8 @@
   opacity: 0.34;
   transform: scale(0.96);
   transition: opacity 120ms linear, transform 120ms linear;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .karaoke-line.is-before,
@@ -70,10 +71,19 @@
   cursor: pointer;
 }
 
+.karaoke-stage[data-granularity="grapheme"] .karaoke-token {
+  padding-inline: 0;
+  letter-spacing: normal;
+}
+
 .karaoke-token.is-active {
   color: #000000;
   background: #ffffff;
   font-weight: 800;
+}
+
+.karaoke-stage[data-granularity="grapheme"] .karaoke-token.is-active {
+  padding-inline: 0.04em;
 }
 
 .karaoke-stage[data-inverse="false"] .karaoke-token.is-active {

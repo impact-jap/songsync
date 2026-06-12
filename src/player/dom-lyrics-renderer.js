@@ -16,6 +16,7 @@ export class DomLyricsRenderer {
 
   render(nodes, options = {}) {
     this.displayType = normalizeDisplayType(options.granularity || 'word');
+    this.stage.dataset.granularity = this.displayType;
     this.nodeElements.clear();
     this.lineElements.clear();
     this.cueIndex.clear();
@@ -48,8 +49,8 @@ export class DomLyricsRenderer {
     const timeMs = Number(cursorState.time_ms || 0);
 
     for (const [nodeId, element] of this.nodeElements) {
-      const startMs = Number(element.dataset.startMs || 0);
       const isActive = activeNodeId === nodeId || element.dataset.cueId === activeNodeId;
+      const startMs = Number(element.dataset.startMs || 0);
       element.classList.toggle('is-active', isActive);
       element.classList.toggle('is-past', !isActive && startMs > 0 && startMs < timeMs);
     }
@@ -82,10 +83,12 @@ export class DomLyricsRenderer {
     lineElement.classList.toggle('is-active', index === activeIndex);
     lineElement.classList.toggle('is-after', index > activeIndex);
 
+    let previousNode = null;
     let previousText = '';
+
     for (const node of group.nodes) {
       const text = String(node.text || '');
-      if (shouldInsertSpace(previousText, text)) {
+      if (shouldInsertSpace(previousNode, node, previousText, text, this.displayType)) {
         lineElement.appendChild(document.createTextNode(' '));
       }
 
@@ -94,11 +97,13 @@ export class DomLyricsRenderer {
       token.textContent = text;
       token.dataset.nodeId = String(node.id);
       token.dataset.cueId = group.cueId;
+      token.dataset.wordKey = wordKeyFromNodeId(node.id);
       token.dataset.startMs = String(node.start_ms ?? group.startMs ?? 0);
       token.addEventListener('click', () => this.onNodeClick(String(node.id)));
       lineElement.appendChild(token);
       this.nodeElements.set(String(node.id), token);
 
+      previousNode = node;
       previousText = text;
     }
 
@@ -220,13 +225,22 @@ function cueIdFromNodeId(value) {
   return id.replace(/-w-\d+(?:-g-\d+)?$/i, '');
 }
 
-function shouldInsertSpace(previousText, currentText) {
-  if (!previousText || !currentText) return false;
+function wordKeyFromNodeId(value) {
+  const id = normalizeNodeId(value);
+  return id.replace(/-g-\d+$/i, '');
+}
+
+function shouldInsertSpace(previousNode, currentNode, previousText, currentText, displayType) {
+  if (!previousNode || !previousText || !currentText) return false;
   if (/^\s/.test(currentText) || /\s$/.test(previousText)) return false;
   if (/^[,.;:!?)]/.test(currentText)) return false;
   if (/[(\[]$/.test(previousText)) return false;
   if (containsCjk(previousText) || containsCjk(currentText)) return false;
-  if (previousText.length === 1 && currentText.length === 1) return false;
+
+  if (displayType === 'grapheme') {
+    return wordKeyFromNodeId(previousNode.id) !== wordKeyFromNodeId(currentNode.id);
+  }
+
   return true;
 }
 

@@ -33,8 +33,8 @@ export class SyncLyricsService {
         cursor: {
           granularity: normalizeGranularity(options.granularity),
           lead_ms: Number(options.leadMs || 0),
-          tolerance_ms: Number(options.toleranceMs || 24),
-          last_word_hold_ms: Number(options.lastWordHoldMs || 600),
+          tolerance_ms: Number(options.toleranceMs ?? 8),
+          last_word_hold_ms: Number(options.lastWordHoldMs ?? 240),
           include_nodes: false
         }
       })

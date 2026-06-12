@@ -1,7 +1,7 @@
 import { DomLyricsRenderer } from './dom-lyrics-renderer.js';
 import { CanvasLyricsRenderer } from './canvas-lyrics-renderer.js';
 
-const FRAME_INTERVAL_MS = 33;
+const FRAME_INTERVAL_MS = 16;
 
 export class LyricsPlayer {
   constructor(elements, service) {
