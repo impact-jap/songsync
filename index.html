@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
+  <title>SyncLyrics Studio</title>
+  <link rel="stylesheet" href="./styles/base.css">
+  <link rel="stylesheet" href="./styles/layout.css">
+  <link rel="stylesheet" href="./styles/panels.css">
+  <link rel="stylesheet" href="./styles/player.css">
+  <link rel="stylesheet" href="./styles/controls.css">
+</head>
+<body>
+  <main class="app-shell" data-drop-zone="root">
+    <section class="workspace" aria-label="Lyrics conversion workspace">
+      <article class="panel panel-plain" data-panel="plain">
+        <header class="panel-toolbar">
+          <button class="toolbar-button" data-action="download" data-target="plain" disabled>Download</button>
+          <button class="toolbar-button" data-action="copy" data-target="plain" disabled>Copy</button>
+        </header>
+        <pre id="plain-output" class="panel-output" tabindex="0">Plain Text</pre>
+      </article>
+
+      <article class="panel panel-phrase" data-panel="phrase">
+        <header class="panel-toolbar">
+          <button class="toolbar-button" data-action="download" data-target="phrase" disabled>Download</button>
+          <button class="toolbar-button" data-action="copy" data-target="phrase" disabled>Copy</button>
+        </header>
+        <pre id="phrase-output" class="panel-output" tabindex="0">Phrase Sync</pre>
+      </article>
+
+      <article class="panel panel-word" data-panel="word">
+        <header class="panel-toolbar">
+          <button class="toolbar-button" data-action="download" data-target="word" disabled>Download</button>
+          <button class="toolbar-button" data-action="copy" data-target="word" disabled>Copy</button>
+        </header>
+        <pre id="word-output" class="panel-output" tabindex="0">Word-by-Word Sync</pre>
+      </article>
+    </section>
+
+    <aside class="side-drawer" aria-label="Studio controls">
+      <button class="floating-button" id="load-audio-button" type="button" title="Load audio">🎵</button>
+      <button class="floating-button" id="load-lyrics-button" type="button" title="Load subtitles or lyrics">📝</button>
+      <button class="floating-button" id="toggle-player-button" type="button" title="Toggle player">🎤</button>
+      <button class="floating-button" id="toggle-settings-button" type="button" title="Toggle settings">⚙️</button>
+    </aside>
+
+    <section class="settings-sheet" id="settings-sheet" aria-label="Conversion settings" hidden>
+      <label class="field">
+        <span>Input format</span>
+        <select id="input-format-select">
+          <option value="auto">Auto</option>
+          <option value="lrc">LRC / Apple LRC</option>
+          <option value="srt">SRT</option>
+          <option value="vtt">WebVTT</option>
+          <option value="ttml">TTML</option>
+          <option value="txt">Text</option>
+          <option value="json">SyncLyrics JSON</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>Offset milliseconds</span>
+        <input id="offset-input" type="number" value="0" step="20">
+      </label>
+      <label class="field">
+        <span>Manual export target</span>
+        <select id="export-format-select">
+          <option value="srt" selected>SRT</option>
+          <option value="vtt">WebVTT</option>
+          <option value="ttml">TTML</option>
+          <option value="json">SyncLyrics JSON</option>
+          <option value="txt">Text</option>
+          <option value="lrc_phrase">Phrase LRC</option>
+          <option value="lrc_word">Apple LRC</option>
+        </select>
+      </label>
+      <button class="primary-action" id="download-export-button" type="button" disabled>Download converted file</button>
+      <label class="field">
+        <span>Cursor granularity</span>
+        <select id="granularity-select">
+          <option value="phrase">Phrase</option>
+          <option value="word" selected>Word</option>
+          <option value="grapheme">Grapheme</option>
+        </select>
+      </label>
+      <label class="field field-inline">
+        <input id="inverse-highlight-toggle" type="checkbox" checked>
+        <span>Inverse highlight</span>
+      </label>
+      <p class="status-line" id="status-line">WASM backend is loading.</p>
+    </section>
+
+    <section class="karaoke-dock" id="karaoke-dock" aria-label="Karaoke player" hidden>
+      <div class="karaoke-header">
+        <strong id="loaded-file-name">No lyrics loaded</strong>
+        <span id="runtime-summary">No runtime</span>
+      </div>
+      <div class="karaoke-stage" id="karaoke-stage" data-inverse="true"></div>
+      <canvas id="karaoke-canvas" class="karaoke-canvas"></canvas>
+    </section>
+
+    <audio id="audio-player" controls></audio>
+    <input id="audio-file-input" type="file" accept="audio/*" hidden>
+    <input id="lyrics-file-input" type="file" accept=".lrc,.srt,.vtt,.ttml,.xml,.txt,.json,text/*" hidden>
+  </main>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

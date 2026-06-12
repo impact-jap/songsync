@@ -1,0 +1,31 @@
+export const selectors = Object.freeze({
+  root: '[data-drop-zone="root"]',
+  panels: '.panel',
+  panelOutputs: {
+    plain: '#plain-output',
+    phrase: '#phrase-output',
+    word: '#word-output'
+  },
+  downloads: '[data-action="download"]',
+  copies: '[data-action="copy"]',
+  loadAudioButton: '#load-audio-button',
+  loadLyricsButton: '#load-lyrics-button',
+  togglePlayerButton: '#toggle-player-button',
+  toggleSettingsButton: '#toggle-settings-button',
+  audioInput: '#audio-file-input',
+  lyricsInput: '#lyrics-file-input',
+  audio: '#audio-player',
+  settingsSheet: '#settings-sheet',
+  inputFormat: '#input-format-select',
+  offset: '#offset-input',
+  exportFormat: '#export-format-select',
+  downloadExportButton: '#download-export-button',
+  granularity: '#granularity-select',
+  inverseHighlight: '#inverse-highlight-toggle',
+  status: '#status-line',
+  karaokeDock: '#karaoke-dock',
+  karaokeStage: '#karaoke-stage',
+  karaokeCanvas: '#karaoke-canvas',
+  loadedFileName: '#loaded-file-name',
+  runtimeSummary: '#runtime-summary'
+});

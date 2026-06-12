@@ -1,0 +1,77 @@
+.panel {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  border-right: 1px solid #cccccc;
+}
+
+.panel:last-child {
+  border-right: none;
+}
+
+.panel-plain {
+  color: var(--plain-fg);
+  background: var(--plain-bg);
+}
+
+.panel-phrase {
+  color: var(--phrase-fg);
+  background: var(--phrase-bg);
+}
+
+.panel-word {
+  color: var(--word-fg);
+  background: var(--word-bg);
+}
+
+.panel-toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  width: 100%;
+  min-height: 24px;
+  background: var(--toolbar-bg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.32);
+}
+
+.toolbar-button {
+  flex: 1 1 0;
+  min-height: 24px;
+  color: var(--toolbar-fg);
+  background: transparent;
+  border: 0;
+  font-size: 0.8rem;
+}
+
+.toolbar-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.panel-output {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 32px 0.75rem 4rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.55;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+}
+
+.panel.is-drop-target {
+  outline: 4px solid var(--accent);
+  outline-offset: -4px;
+}
+
+@media (orientation: portrait) {
+  .panel {
+    flex: none;
+    height: 33.3333vh;
+    border-right: none;
+    border-bottom: 3px solid #cccccc;
+  }
+}

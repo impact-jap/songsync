@@ -1,0 +1,73 @@
+.floating-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  color: #ffffff;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+}
+
+.floating-button:hover {
+  filter: brightness(1.08);
+}
+
+.field {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 0.85rem;
+}
+
+.field-inline {
+  grid-template-columns: auto 1fr;
+  align-items: center;
+}
+
+.field span {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+}
+
+.field input,
+.field select {
+  min-height: 34px;
+  color: #e5e7eb;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0 0.6rem;
+}
+
+.status-line {
+  min-height: 1.2rem;
+  margin: 0.25rem 0 0;
+  color: #cbd5e1;
+  font-size: 0.8rem;
+}
+
+.status-line.is-error {
+  color: var(--danger);
+}
+
+.status-line.is-ok {
+  color: var(--success);
+}
+
+.primary-action {
+  width: 100%;
+  min-height: 36px;
+  margin: 0 0 0.85rem;
+  color: #ffffff;
+  background: var(--accent);
+  border: 0;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+.primary-action:hover:not(:disabled) {
+  filter: brightness(1.08);
+}

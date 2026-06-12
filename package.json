@@ -1,0 +1,20 @@
+{
+  "name": "synclyrics-wasm",
+  "type": "module",
+  "version": "0.4.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-user/synclyrics"
+  },
+  "files": [
+    "synclyrics_wasm_bg.wasm",
+    "synclyrics_wasm.js",
+    "synclyrics_wasm.d.ts"
+  ],
+  "main": "synclyrics_wasm.js",
+  "types": "synclyrics_wasm.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
