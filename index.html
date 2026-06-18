@@ -49,13 +49,11 @@
       <label class="field">
         <span>Input format</span>
         <select id="input-format-select">
-          <option value="auto">Auto</option>
           <option value="lrc">LRC / Apple LRC</option>
           <option value="srt">SRT</option>
           <option value="vtt">WebVTT</option>
           <option value="ttml">TTML</option>
           <option value="txt">Text</option>
-          <option value="json">SyncLyrics JSON</option>
         </select>
       </label>
 
@@ -70,14 +68,11 @@
           <option value="srt" selected>SRT</option>
           <option value="vtt">WebVTT</option>
           <option value="ttml">TTML</option>
-          <option value="json">SyncLyrics JSON</option>
           <option value="txt">Text</option>
           <option value="lrc_phrase">Phrase LRC</option>
           <option value="lrc_word">Apple LRC</option>
         </select>
       </label>
-
-      <button class="primary-action" id="download-export-button" type="button" disabled>Download converted file</button>
 
       <label class="field">
         <span>Cursor granularity</span>
@@ -94,6 +89,9 @@
       </label>
 
       <p class="status-line" id="status-line">WASM backend is loading.</p>
+
+      <button class="primary-action" id="download-export-button" type="button" disabled>Download converted file</button>
+      
     </section>
 
     <section class="karaoke-dock" id="karaoke-dock" aria-label="Karaoke player" hidden>
