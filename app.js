@@ -149,7 +149,6 @@ function detectFormat(filename) {
   if (lower.endsWith('.srt')) return 'srt';
   if (lower.endsWith('.vtt')) return 'webvtt';
   if (lower.endsWith('.ttml') || lower.endsWith('.xml')) return 'ttml';
-  if (lower.endsWith('.json')) return 'json';
   if (lower.endsWith('.txt')) return 'txt';
   return null;
 }
