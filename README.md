@@ -1,12 +1,10 @@
 # SyncLyrics Web Studio
 
-Static browser harness for testing the generated SyncLyrics WASM package.
+SyncLyrics is a Rust-based lyric synchronization engine powered by [super-calendar.io](https://super-calendar.io)'s Speech-to-Text technology and distributed as a WebAssembly (WASM) package.
 
-This folder does not include compiled WASM by default. Copy the generated package into `web/pkg/`:
+With this application, you can:
 
-```text
-web/pkg/synclyrics_wasm.js
-web/pkg/synclyrics_wasm_bg.wasm
-```
+- Parse SRT, WebVTT, LRC, Apple/enhanced LRC, TTML and TXT.
+- Convert between supported text formats.
+- Generate render nodes for phrase, word, and grapheme highlighting.
 
-Then serve the folder with any static server.
