@@ -15,8 +15,8 @@
 
 .side-drawer {
   position: fixed;
-  right: 18px;
-  bottom: 7em;
+  right: 20px;
+  bottom: 2em;
   z-index: 40;
   display: flex;
   flex-direction: column;
