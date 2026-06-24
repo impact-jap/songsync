@@ -1,6 +1,6 @@
 # SyncLyrics
 
-> SyncLyrics is a Rust-based lyric synchronization engine powered by the word-level Speech-to-Text technology developed by [Super Calendar (super-calendar.io)](https://super-calendar.io)'s and distributed as a WebAssembly (WASM) package.
+> SyncLyrics is a Rust-based lyric synchronization distributed as a WebAssembly (WASM) package.
 
 With this application, you can:
 
